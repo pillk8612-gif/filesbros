@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Вход в админку</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 400px; margin: 100px auto; padding: 0 16px; text-align: center; }
+    form { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    input { padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    button { padding: 10px; border: 0; border-radius: 8px; background: #2563eb; color: #fff; cursor: pointer; }
+    .msg { color: #991b1b; }
+  </style>
+</head>
+<body>
+  <h1>Вход в админку</h1>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}<div class="msg">{{ messages[0] }}</div>{% endif %}
+  {% endwith %}
+  <form method="post">
+    <input type="password" name="password" placeholder="Пароль" required>
+    <button type="submit">Войти</button>
+  </form>
+  <p><a href="/">На главную</a></p>
+</body>
+</html>

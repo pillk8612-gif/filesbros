@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Админ-панель</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 16px; }
+    textarea { width: 100%; height: 200px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 10px; }
+    button { padding: 10px 18px; border: 0; border-radius: 8px; background: #2563eb; color: #fff; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Управление текстом</h1>
+  <p>Введите текст, который увидят все пользователи:</p>
+  <textarea id="textInput">{{ text }}</textarea>
+  <div>
+    <button onclick="saveText()">Сохранить</button>
+    <span id="status" style="color:green; margin-left:10px;"></span>
+  </div>
+  <p style="margin-top: 30px;"><a href="/">На главную</a> | <a href="/admin/logout">Выйти</a></p>
+
+  <script>
+    async function saveText() {
+      const text = document.getElementById('textInput').value;
+      const status = document.getElementById('status');
+      status.textContent = "Сохранение...";
+      
+      const res = await fetch('/api/update_text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text })
+      });
+      
+      if (res.ok) {
+        status.textContent = "Сохранено!";
+        setTimeout(() => status.textContent = "", 3000);
+      } else {
+        status.textContent = "Ошибка!";
+        status.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
